@@ -5,4 +5,15 @@ package model;
  */
 
 public class restaurant {
+
+    private String name;
+
+    public restaurant(String name){
+
+        this.name = name;
+    }
+
+
+
+
 }
