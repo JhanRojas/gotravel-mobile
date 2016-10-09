@@ -3,6 +3,8 @@ package com.gotravel.mobile.activities;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,11 +14,24 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
+import android.widget.GridView;
+import android.widget.Toast;
 
 import com.gotravel.mobile.R;
+import com.gotravel.mobile.adapters.ImageAdapter;
+import com.gotravel.mobile.adapters.TourPackageAdapter;
+import com.gotravel.mobile.models.TourPackage;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private ArrayList<TourPackage> tourPackages;
+    private RecyclerView tourPackageRecyclerView;
+    private RecyclerView.Adapter tourPackageAdapter;
+    private RecyclerView.LayoutManager tourPackageLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +57,17 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        tourPackages = new ArrayList<>();
+        initializeData();
+
+        tourPackageRecyclerView = (RecyclerView) findViewById(R.id.tourPackageRecyclerView);
+        tourPackageRecyclerView.setHasFixedSize(true);
+        tourPackageLayoutManager = new LinearLayoutManager(this);
+        tourPackageRecyclerView.setLayoutManager(tourPackageLayoutManager);
+        tourPackageAdapter = new TourPackageAdapter(tourPackages);
+        tourPackageRecyclerView.setAdapter(tourPackageAdapter);
+
     }
 
     @Override
@@ -99,5 +125,14 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void initializeData() {
+        tourPackages = new ArrayList<>();
+        tourPackages.add(new TourPackage("Cuzco", Integer.toString(R.mipmap.cuzco)));
+        tourPackages.add(new TourPackage("Lima", Integer.toString(R.mipmap.cuzco)));
+        tourPackages.add(new TourPackage("Piura", Integer.toString(R.mipmap.cuzco)));
+        tourPackages.add(new TourPackage("Ica", Integer.toString(R.mipmap.cuzco)));
+        tourPackages.add(new TourPackage("Tacna", Integer.toString(R.mipmap.cuzco)));
     }
 }
