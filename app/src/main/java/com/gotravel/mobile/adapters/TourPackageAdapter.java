@@ -1,13 +1,18 @@
 package com.gotravel.mobile.adapters;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.v7.graphics.Palette;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gotravel.mobile.models.TourPackage;
@@ -15,66 +20,77 @@ import com.gotravel.mobile.models.TourPackage;
 import java.util.ArrayList;
 
 import com.gotravel.mobile.R;
+import com.gotravel.mobile.models.TourPackageData;
+import com.squareup.picasso.Picasso;
 
 /**
  * Created by jhanrojas on 8/10/16.
  */
 
 public class TourPackageAdapter extends RecyclerView.Adapter<TourPackageAdapter.ViewHolder> {
-    private ArrayList<TourPackage> tourPackages;
+    Context mContext;
+    OnItemClickListener mItemClickListener;
 
-    public TourPackageAdapter(ArrayList<TourPackage> tourPackages) {
-        this.tourPackages = tourPackages;
-    }
-
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tourPackageTextView;
-        ImageView tourPackageImageView;
-        CardView tourPackageCard;
-
-        public ViewHolder(View itemView) {
-            super(itemView);
-            tourPackageCard = (CardView) itemView.findViewById(R.id.tourPackageCard);
-            tourPackageTextView = (TextView) itemView.findViewById(R.id.tourPackageTitleTextView);
-            tourPackageImageView = (ImageView) itemView.findViewById(R.id.tourPackageImageView);
-        }
+    public TourPackageAdapter(Context context) {
+        this.mContext = context;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.tour_package_card, parent, false);
-        ViewHolder viewHolder = new ViewHolder(view);
-        return viewHolder;
-
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
-        holder.tourPackageTextView.setText(tourPackages.get(position).title);
-        holder.tourPackageImageView.setImageResource(
-                Integer.parseInt(tourPackages.get(position).pictureUrl));
-        /*holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                System.out.printf("Selected position: %d%n", position);
-                Intent itemIntent = new Intent(view.getContext(), ItemActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("firstName", tourPackages.get(position).firstName);
-                bundle.putString("pictureUrl", tourPackages.get(position).pictureUrl);
-                itemIntent.putExtras(bundle);
-                view.getContext().startActivity(itemIntent);
-            }
-        });*/
-    }
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
+        final TourPackage tourPackage = new TourPackageData().tourPackageList().get(position);
 
+        holder.placeName.setText(tourPackage.title);
+        Picasso.with(mContext).load(tourPackage.getImageResourceId(mContext)).into(holder.placeImage);
+
+        Bitmap photo = BitmapFactory.decodeResource(mContext.getResources(), tourPackage.getImageResourceId(mContext));
+
+        Palette.generateAsync(photo, new Palette.PaletteAsyncListener() {
+            public void onGenerated(Palette palette) {
+                int mutedLight = palette.getMutedColor(mContext.getResources().getColor(android.R.color.black));
+                holder.placeNameHolder.setBackgroundColor(mutedLight);
+            }
+        });
+    }
 
     @Override
     public int getItemCount() {
-        return tourPackages.size();
+        return new TourPackageData().tourPackageList().size();
     }
 
-    @Override
-    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
-        super.onAttachedToRecyclerView(recyclerView);
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        public LinearLayout placeHolder;
+        public LinearLayout placeNameHolder;
+        public TextView placeName;
+        public ImageView placeImage;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+            placeHolder = (LinearLayout) itemView.findViewById(R.id.mainHolder);
+            placeName = (TextView) itemView.findViewById(R.id.placeName);
+            placeNameHolder = (LinearLayout) itemView.findViewById(R.id.placeNameHolder);
+            placeImage = (ImageView) itemView.findViewById(R.id.placeImage);
+            placeHolder.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (mItemClickListener != null) {
+                mItemClickListener.onItemClick(itemView, getPosition());
+            }
+        }
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(View view, int position);
+    }
+
+    public void setOnItemClickListener(final OnItemClickListener mItemClickListener) {
+        this.mItemClickListener = mItemClickListener;
     }
 }

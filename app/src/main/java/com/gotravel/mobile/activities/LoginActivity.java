@@ -162,7 +162,11 @@ public class LoginActivity extends AppCompatActivity implements SelectAccountDia
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams params = new RequestParams("token", token);
 
-        client.post("https://gotravel-restful-dev-jhanrojas.c9users.io/auth/verify", params, new AsyncHttpResponseHandler() {
+
+        Intent main = new Intent(LoginActivity.this, MainActivity.class);
+        startActivity(main);
+
+        /*client.post("https://gotravel-restful-dev-jhanrojas.c9users.io/auth/verify", params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 Log.d(TAG, "OnTokenAcquired onSuccess");
@@ -180,6 +184,6 @@ public class LoginActivity extends AppCompatActivity implements SelectAccountDia
 
                 error.printStackTrace();
             }
-        });
+        });*/
     }
 }
