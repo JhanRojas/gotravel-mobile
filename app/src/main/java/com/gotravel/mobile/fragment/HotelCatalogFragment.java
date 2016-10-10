@@ -117,6 +117,7 @@ public class HotelCatalogFragment extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                //Allow the adapter refresh their content
                 recyclerView.getAdapter().notifyDataSetChanged();
             }
         }, new Response.ErrorListener() {
