@@ -1,42 +1,39 @@
 package com.gotravel.mobile.activities;
 
-import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.MenuInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
-import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.gotravel.mobile.R;
-import com.gotravel.mobile.adapters.ImageAdapter;
+import com.gotravel.mobile.adapters.HotelAdapter;
 import com.gotravel.mobile.adapters.TourPackageAdapter;
+import com.gotravel.mobile.fragment.HotelCatalogFragment;
+import com.gotravel.mobile.models.Hotel;
 import com.gotravel.mobile.models.TourPackage;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, HotelCatalogFragment.OnListFragmentInteractionListener {
 
     private Toolbar toolbar;
     private ArrayList<TourPackage> tourPackages;
@@ -57,6 +54,18 @@ public class MainActivity extends AppCompatActivity
 
         setUpActionBar();
 
+        /*Fragment fragment = null;
+        Class fragmentClass = null;
+        fragmentClass = HotelCatalogFragment.class;
+        try {
+            fragment = (Fragment) fragmentClass.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();*/
+/*
         mStaggeredLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
 
         tourPackageRecyclerView = (RecyclerView) findViewById(R.id.tourPackageRecyclerView);
@@ -82,7 +91,7 @@ public class MainActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-
+*/
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -149,6 +158,8 @@ public class MainActivity extends AppCompatActivity
         }
     };
 
+
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -181,15 +192,20 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+        Log.d("Gotravel", "onNavigationItemSelected");
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+
+        Fragment fragment = null;
+        Class fragmentClass = null;
 
         if (id == R.id.nav_tour_package) {
             // Handle the camera action
         } else if (id == R.id.nav_flight) {
 
         } else if (id == R.id.nav_hotel) {
-
+            Log.d("Gotravel", "onNavigationItemSelected - nav_hotel");
+            fragmentClass = HotelCatalogFragment.class;
         } else if (id == R.id.nav_restaurant) {
 
         } else if (id == R.id.nav_place) {
@@ -199,6 +215,13 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_send) {
 
         }
+        try {
+            fragment = (Fragment) fragmentClass.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -229,4 +252,30 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+
+    @Override
+    public void onListFragmentInteraction(Hotel item, HotelAdapter.ViewHolder v) {
+
+        Log.d("Gotravel", "onListFragmentInteraction hotel.name="+item.id);
+        Log.d("Gotravel", "onListFragmentInteraction hotel.name="+item.name);
+
+        Intent transitionIntent = new Intent(MainActivity.this, HotelDetailActivity.class);
+        transitionIntent.putExtra(HotelDetailActivity.EXTRA_PARAM_ID, item.id);
+        ImageView placeImage = (ImageView) v.hotelPictureImageView;
+        LinearLayout placeNameHolder = (LinearLayout) v.hotelNameHolder;
+
+        View navigationBar = findViewById(android.R.id.navigationBarBackground);
+        View statusBar = findViewById(android.R.id.statusBarBackground);
+
+        Pair<View, String> imagePair = Pair.create((View) placeImage, "tImage");
+        /*Pair<View, String> holderPair = Pair.create((View) placeNameHolder, "tNameHolder");
+        Pair<View, String> navPair = Pair.create(navigationBar, Window.NAVIGATION_BAR_BACKGROUND_TRANSITION_NAME);
+        Pair<View, String> statusPair = Pair.create(statusBar, Window.STATUS_BAR_BACKGROUND_TRANSITION_NAME);
+        Pair<View, String> toolbarPair = Pair.create((View)toolbar, "tActionBar");*/
+
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this, imagePair);
+
+        ActivityCompat.startActivity(MainActivity.this, transitionIntent, options.toBundle());
+
+    }
 }
