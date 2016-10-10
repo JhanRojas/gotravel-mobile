@@ -2,8 +2,6 @@ package com.gotravel.mobile.adapters;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
@@ -11,8 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -35,6 +31,7 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.ViewHolder> 
     private final HotelCatalogFragment.OnListFragmentInteractionListener mListener;
 
     public HotelAdapter(List<Hotel> items, HotelCatalogFragment.OnListFragmentInteractionListener listener, Context context) {
+        Log.d("GOTRAVEL", "HotelAdapter");
         hotels = items;
         mListener = listener;
         this.mContext = context;
@@ -42,6 +39,7 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.ViewHolder> 
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        Log.d("GOTRAVEL", "onCreateViewHolder");
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_hotel, parent, false);
         return new ViewHolder(view);
@@ -49,10 +47,13 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-
+        Log.d("GOTRAVEL", "onBindViewHolder");
         holder.hotel = hotels.get(position);
         Log.d("Gotravel", "HotelAdapter onBindViewHolder hotels.id="+holder.hotel.id);
         holder.hotelNameTextView.setText(hotels.get(position).name);
+        Log.d("Gotravel", "HotelAdapter onBindViewHolder hotels.id="+holder.hotel.name);
+        Log.d("Gotravel", "HotelAdapter onBindViewHolder hotels.id="+holder.hotel.pictureUrl);
+
 
         Picasso.with(mContext).load(hotels.get(position).pictureUrl).into(new Target() {
             @Override
@@ -93,7 +94,7 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.ViewHolder> 
 
     @Override
     public int getItemCount() {
-        return hotels.size();
+        return hotels != null ? hotels.size() : 0;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

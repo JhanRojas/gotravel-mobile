@@ -1,5 +1,7 @@
 package com.gotravel.mobile.fragment.dummy;
 
+import android.content.Intent;
+
 import com.gotravel.mobile.models.Hotel;
 
 import java.util.ArrayList;
@@ -23,26 +25,12 @@ public class HotelContent {
     /**
      * A map of sample (dummy) items, by ID.
      */
-    public static final Map<String, Hotel> ITEM_MAP = new HashMap<String, Hotel>();
+    public static final Map<Integer, Hotel> ITEM_MAP = new HashMap<Integer, Hotel>();
 
     private static final int COUNT = 25;
 
     static {
-        addItem(new Hotel(String.valueOf(String.valueOf(1)),"Sheraton","5 Entrellas","http://vao.pe/wp-content/uploads/2013/03/sheraton-hoetl.jpg"));
-        addItem(new Hotel(String.valueOf(String.valueOf(2)),"Westin","5 Entrellas","http://www.gym.com.pe/images/galeria/edificaciones/westin/westin_lima_big.jpg"));
-        addItem(new Hotel(String.valueOf(String.valueOf(3)),"Marriott","5 Entrellas","http://techdrive.co/wp-content/uploads/2014/10/http-cache.marriott.com-propertyimages-m-miaap-miaap_main01.jpg"));
-        addItem(new Hotel(String.valueOf(String.valueOf(4)),"Sumaq","5 Entrellas","http://www.luxurylatinamerica.com/peru/photos2/sumaq-exterior.jpg"));
-        addItem(new Hotel(String.valueOf(String.valueOf(5)),"Marina","5 Entrellas","https://media-cdn.tripadvisor.com/media/photo-s/01/c7/f5/57/mancora-marina-hotel.jpg"));
-        addItem(new Hotel(String.valueOf(String.valueOf(6)),"Marriott","5 Entrellas","http://techdrive.co/wp-content/uploads/2014/10/http-cache.marriott.com-propertyimages-m-miaap-miaap_main01.jpg"));
-        addItem(new Hotel(String.valueOf(String.valueOf(7)),"Sumaq","5 Entrellas","http://www.luxurylatinamerica.com/peru/photos2/sumaq-exterior.jpg"));
-        addItem(new Hotel(String.valueOf(String.valueOf(8)),"Marina","5 Entrellas","https://media-cdn.tripadvisor.com/media/photo-s/01/c7/f5/57/mancora-marina-hotel.jpg"));
-        addItem(new Hotel(String.valueOf(String.valueOf(9)),"Sheraton","5 Entrellas","http://vao.pe/wp-content/uploads/2013/03/sheraton-hoetl.jpg"));
-        addItem(new Hotel(String.valueOf(String.valueOf(10)),"Westin","5 Entrellas","http://www.gym.com.pe/images/galeria/edificaciones/westin/westin_lima_big.jpg"));
-        addItem(new Hotel(String.valueOf(String.valueOf(11)),"Marriott","5 Entrellas","http://techdrive.co/wp-content/uploads/2014/10/http-cache.marriott.com-propertyimages-m-miaap-miaap_main01.jpg"));
-        addItem(new Hotel(String.valueOf(String.valueOf(12)),"Sumaq","5 Entrellas","http://www.luxurylatinamerica.com/peru/photos2/sumaq-exterior.jpg"));
-        addItem(new Hotel(String.valueOf(String.valueOf(13)),"Marina","5 Entrellas","https://media-cdn.tripadvisor.com/media/photo-s/01/c7/f5/57/mancora-marina-hotel.jpg"));
-        addItem(new Hotel(String.valueOf(String.valueOf(14)),"Marriott","5 Entrellas","http://techdrive.co/wp-content/uploads/2014/10/http-cache.marriott.com-propertyimages-m-miaap-miaap_main01.jpg"));
-        addItem(new Hotel(String.valueOf(String.valueOf(15)),"Sumaq","5 Entrellas","http://www.luxurylatinamerica.com/peru/photos2/sumaq-exterior.jpg"));
+        addItem(new Hotel(1,"Sheraton","5 Entrellas","http://vao.pe/wp-content/uploads/2013/03/sheraton-hoetl.jpg"));
     }
 
     private static void addItem(Hotel item) {

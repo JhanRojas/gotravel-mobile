@@ -32,14 +32,25 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.gotravel.mobile.R;
 import com.gotravel.mobile.adapters.TransitionAdapter;
 import com.gotravel.mobile.fragment.dummy.HotelContent;
 import com.gotravel.mobile.models.Hotel;
 import com.gotravel.mobile.models.TourPackage;
 import com.gotravel.mobile.models.TourPackageData;
+import com.gotravel.mobile.util.Constants;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -59,17 +70,19 @@ public class HotelDetailActivity extends Activity implements View.OnClickListene
     private EditText mEditTextTodo;
     private boolean isEditTextVisible;
     private InputMethodManager mInputManager;
-    private Hotel hotel;
+    //private Hotel hotel;
     private ArrayList<String> mTodoList;
     private ArrayAdapter mToDoAdapter;
     int defaultColorForRipple;
+    Hotel hotel = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hotel_detail);
 
-        hotel = HotelContent.ITEM_MAP.get(getIntent().getStringExtra(EXTRA_PARAM_ID));
+        getHotel(getIntent().getIntExtra(EXTRA_PARAM_ID,0));
+        //hotel = HotelContent.ITEM_MAP.get(getIntent().getIntExtra(EXTRA_PARAM_ID,0));
 
         mList = (ListView) findViewById(R.id.list);
         mImageView = (ImageView) findViewById(R.id.placeImage);
@@ -90,30 +103,50 @@ public class HotelDetailActivity extends Activity implements View.OnClickListene
         mToDoAdapter = new ArrayAdapter(this, R.layout.row_todo, mTodoList);
         mList.setAdapter(mToDoAdapter);
 
-        loadTourPackage();
         windowTransition();
 
     }
 
-    private void loadTourPackage() {
-        mTitle.setText(hotel.name);
-        Picasso.with(this).load(hotel.pictureUrl).into(new Target() {
+    public void getHotel(int idHotel){
+        JsonObjectRequest jsonRequest = new JsonObjectRequest(
+                Request.Method.GET, Constants.RESTFUL_MAIN_URL+Constants.RESTFUL_HOTELS_GET_PATH+idHotel+".json", null, new Response.Listener<JSONObject>() {
             @Override
-            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                mImageView.setImageBitmap(bitmap);
-                colorize(bitmap);
+            public void onResponse(JSONObject response) {
+                // the response is already constructed as a JSONObject!
+
+                try {
+                    hotel = new Hotel(response.getInt("id"),response.getString("name"),response.getString("description"), response.getString("pictureUrl"));
+                    mTitle.setText(hotel.name);
+                    Picasso.with(getApplicationContext()).load(hotel.pictureUrl).into(new Target() {
+                        @Override
+                        public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                            mImageView.setImageBitmap(bitmap);
+                            colorize(bitmap);
+                        }
+
+                        @Override
+                        public void onBitmapFailed(Drawable errorDrawable) {
+
+                        }
+
+                        @Override
+                        public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                        }
+                    });
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
+        }, new Response.ErrorListener() {
 
             @Override
-            public void onBitmapFailed(Drawable errorDrawable) {
-
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
             }
-
-            @Override
-            public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-            }
-        });
+        }
+        );
+        Volley.newRequestQueue(this.getApplicationContext()).add(jsonRequest);
     }
 
     private void windowTransition() {
