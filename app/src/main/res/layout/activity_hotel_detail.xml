@@ -84,10 +84,20 @@ android:orientation="vertical">
     android:textAppearance="?android:attr/textAppearanceSmall"
     android:textColor="@android:color/white" />
 
-<ListView
+<!--<ListView
     android:id="@+id/hotelRoomListView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:requiresFadingEdge="vertical" />
+    android:requiresFadingEdge="vertical" />-->
+
+    <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/roomRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layoutManager="LinearLayoutManager"
+        tools:context="com.gotravel.mobile.activities.HotelDetailActivity"
+        tools:listitem="@layout/fragment_room" />
 
 </LinearLayout>

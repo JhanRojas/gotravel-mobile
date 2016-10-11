@@ -15,6 +15,7 @@ import android.graphics.drawable.RippleDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.graphics.Palette;
+import android.support.v7.widget.RecyclerView;
 import android.transition.Fade;
 import android.transition.Transition;
 import android.util.Log;
@@ -39,6 +40,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.gotravel.mobile.R;
+import com.gotravel.mobile.adapters.RoomAdapter;
 import com.gotravel.mobile.adapters.TransitionAdapter;
 import com.gotravel.mobile.fragment.dummy.HotelContent;
 import com.gotravel.mobile.models.Hotel;
@@ -78,6 +80,7 @@ public class HotelDetailActivity extends Activity implements View.OnClickListene
     private ArrayAdapter mToDoAdapter;
     int defaultColorForRipple;
     Hotel hotel = null;
+    RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,7 +92,8 @@ public class HotelDetailActivity extends Activity implements View.OnClickListene
         getHotel(hotelId);
         //hotel = HotelContent.ITEM_MAP.get(getIntent().getIntExtra(EXTRA_PARAM_ID,0));
 
-        hotelRoomListView = (ListView) findViewById(R.id.hotelRoomListView);
+        //hotelRoomListView = (ListView) findViewById(R.id.hotelRoomListView);
+        recyclerView = (RecyclerView) findViewById(R.id.roomRecyclerView);
         mImageView = (ImageView) findViewById(R.id.hotelPictureImageView);
         mTitle = (TextView) findViewById(R.id.textView);
         mTitleHolder = (LinearLayout) findViewById(R.id.hotelNameHolder);
@@ -107,13 +111,15 @@ public class HotelDetailActivity extends Activity implements View.OnClickListene
         getRooms(hotelId);
         mTodoList = new ArrayList<>();
         mToDoAdapter = new ArrayAdapter(this, R.layout.row_todo, mTodoList);
-        hotelRoomListView.setAdapter(mToDoAdapter);
+
+        recyclerView.setAdapter(new RoomAdapter(rooms));
 
         windowTransition();
 
     }
 
     public void getRooms(int idHotel){
+        Log.d("GOTRAVEL","getRooms");
         JsonArrayRequest jsonRequest = new JsonArrayRequest(
                 Request.Method.GET, Constants.RESTFUL_MAIN_URL+Constants.RESTFUL_HOTELS_GET_ROOMS_PATH_PREFIX+idHotel+Constants.RESTFUL_HOTELS_GET_ROOMS_PATH_SUFFIX, null, new Response.Listener<JSONArray>() {
             @Override
@@ -140,7 +146,7 @@ public class HotelDetailActivity extends Activity implements View.OnClickListene
                     e.printStackTrace();
                 }
                 //Allow the adapter refresh their content
-                mToDoAdapter.notifyDataSetChanged();
+                recyclerView.getAdapter().notifyDataSetChanged();
             }
         }, new Response.ErrorListener() {
 
