@@ -4,21 +4,21 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
-import android.view.MenuInflater;
-import android.view.View;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -27,7 +27,11 @@ import com.gotravel.mobile.R;
 import com.gotravel.mobile.adapters.HotelAdapter;
 import com.gotravel.mobile.adapters.TourPackageAdapter;
 import com.gotravel.mobile.fragment.HotelCatalogFragment;
+<<<<<<< HEAD
 import com.gotravel.mobile.fragment.PlaceCatalogFragment;
+=======
+import com.gotravel.mobile.fragment.RestaurantCatalogFragment;
+>>>>>>> aa5cf092b5d9d7346a05daacc769075f3a5a4e9c
 import com.gotravel.mobile.models.Hotel;
 import com.gotravel.mobile.models.TourPackage;
 
@@ -211,6 +215,8 @@ public class MainActivity extends AppCompatActivity
             Log.d("Gotravel", "onNavigationItemSelected - nav_hotel");
             fragmentClass = HotelCatalogFragment.class;
         } else if (id == R.id.nav_restaurant) {
+            Log.d("Gotravel", "onNavigationItemSelected - nav_restaurant");
+            fragmentClass = RestaurantCatalogFragment.class;
 
         } else if (id == R.id.nav_place) {
             Log.d("Gotravel", "onNavigationItemSelected - nav_place");
