@@ -6,7 +6,6 @@
     android:name="com.gotravel.mobile.fragment.HotelFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     app:layoutManager="LinearLayoutManager"
     tools:context="com.gotravel.mobile.fragment.HotelCatalogFragment"
     tools:listitem="@layout/fragment_hotel" />

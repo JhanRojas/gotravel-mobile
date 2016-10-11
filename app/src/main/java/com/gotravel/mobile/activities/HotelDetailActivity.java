@@ -12,6 +12,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.RippleDrawable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.graphics.Palette;
@@ -69,7 +70,8 @@ public class HotelDetailActivity extends Activity implements View.OnClickListene
     private TextView hotelNameTextView;
     private LinearLayout hotelNameHolder;
     private Palette mPalette;
-    private ImageButton mAddButton;
+    //private ImageButton btnRateImageButton;
+    private FloatingActionButton btnRateFloatingActionButton;
     private Animatable mAnimatable;
     private LinearLayout mRevealView;
     private EditText mEditTextTodo;
@@ -95,12 +97,13 @@ public class HotelDetailActivity extends Activity implements View.OnClickListene
         hotelPictureImageView = (ImageView) findViewById(R.id.hotelPictureImageView);
         hotelNameTextView = (TextView) findViewById(R.id.hotelNameTextView);
         hotelNameHolder = (LinearLayout) findViewById(R.id.hotelNameHolder);
-        mAddButton = (ImageButton) findViewById(R.id.btn_add);
+        //btnRateImageButton = (ImageButton) findViewById(R.id.btnRateImageButton);
+        btnRateFloatingActionButton = (FloatingActionButton) findViewById(R.id.btnRateFloatingActionButton);
         mRevealView = (LinearLayout) findViewById(R.id.llEditTextHolder);
         mEditTextTodo = (EditText) findViewById(R.id.etTodo);
 
-        mAddButton.setImageResource(R.drawable.icn_morph_reverse);
-        mAddButton.setOnClickListener(this);
+        //btnRateImageButton.setImageResource(R.drawable.icn_morph_reverse);
+        btnRateFloatingActionButton.setOnClickListener(this);
         defaultColorForRipple = getResources().getColor(R.color.primary_dark);
         mInputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         mRevealView.setVisibility(View.INVISIBLE);
@@ -204,7 +207,7 @@ public class HotelDetailActivity extends Activity implements View.OnClickListene
         getWindow().getEnterTransition().addListener(new TransitionAdapter() {
             @Override
             public void onTransitionEnd(Transition transition) {
-                mAddButton.animate().alpha(1.0f);
+                //btnRateImageButton.animate().alpha(1.0f);
                 getWindow().getEnterTransition().removeListener(this);
             }
         });
@@ -229,14 +232,12 @@ public class HotelDetailActivity extends Activity implements View.OnClickListene
     private void applyPalette() {
         //getWindow().setBackgroundDrawable(new ColorDrawable(mPalette.getDarkMutedColor(defaultColorForRipple)));
         hotelNameHolder.setBackgroundColor(mPalette.getMutedColor(defaultColorForRipple));
-        applyRippleColor(mPalette.getVibrantColor(defaultColorForRipple),
-                mPalette.getDarkVibrantColor(defaultColorForRipple));
         mRevealView.setBackgroundColor(mPalette.getLightVibrantColor(defaultColorForRipple));
     }
 
-    private void applyRippleColor(int bgColor, int tintColor) {
-        colorRipple(mAddButton, bgColor, tintColor);
-    }
+    /*private void applyRippleColor(int bgColor, int tintColor) {
+        colorRipple(btnRateImageButton, bgColor, tintColor);
+    }*/
 
     private void colorRipple(ImageButton id, int bgColor, int tintColor) {
         View buttonView = id;
@@ -254,20 +255,17 @@ public class HotelDetailActivity extends Activity implements View.OnClickListene
                     revealEditText(mRevealView);
                     mEditTextTodo.requestFocus();
                     mInputManager.showSoftInput(mEditTextTodo, InputMethodManager.SHOW_IMPLICIT);
-                    mAddButton.setImageResource(R.drawable.icn_morp);
-                    mAnimatable = (Animatable) (mAddButton).getDrawable();
+                    //btnRateImageButton.setImageResource(R.drawable.ic_action_rate);
+                    mAnimatable = (Animatable) (btnRateFloatingActionButton).getDrawable();
                     mAnimatable.start();
-                    applyRippleColor(getResources().getColor(R.color.light_green), getResources().getColor(R.color.dark_green));
                 } else {
                     addToDo(mEditTextTodo.getText().toString());
                     mToDoAdapter.notifyDataSetChanged();
                     mInputManager.hideSoftInputFromWindow(mEditTextTodo.getWindowToken(), 0);
                     hideEditText(mRevealView);
-                    mAddButton.setImageResource(R.drawable.icn_morph_reverse);
-                    mAnimatable = (Animatable) (mAddButton).getDrawable();
+                    //btnRateImageButton.setImageResource(R.drawable.icn_morph_reverse);
+                    mAnimatable = (Animatable) (btnRateFloatingActionButton).getDrawable();
                     mAnimatable.start();
-                    applyRippleColor(mPalette.getVibrantColor(defaultColorForRipple),
-                            mPalette.getDarkVibrantColor(defaultColorForRipple));
                 }
         }
     }
@@ -302,7 +300,7 @@ public class HotelDetailActivity extends Activity implements View.OnClickListene
     public void onBackPressed() {
         AlphaAnimation alphaAnimation = new AlphaAnimation(1.0f, 0.0f);
         alphaAnimation.setDuration(100);
-        mAddButton.startAnimation(alphaAnimation);
+        btnRateFloatingActionButton.startAnimation(alphaAnimation);
         alphaAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -311,7 +309,7 @@ public class HotelDetailActivity extends Activity implements View.OnClickListene
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                mAddButton.setVisibility(View.GONE);
+                btnRateFloatingActionButton.setVisibility(View.GONE);
                 finishAfterTransition();
             }
 

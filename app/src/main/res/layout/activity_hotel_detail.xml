@@ -42,7 +42,8 @@ android:orientation="vertical">
 
 <FrameLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingBottom="10dp">
 
     <LinearLayout
         android:id="@+id/hotelNameHolder"
@@ -62,17 +63,26 @@ android:orientation="vertical">
 
     </LinearLayout>
 
-    <ImageButton
-        android:id="@+id/btn_add"
+    <!--<ImageButton
+        android:id="@+id/btnRateImageButton"
         android:layout_width="@dimen/floating_button_size"
         android:layout_height="@dimen/floating_button_size"
         android:layout_gravity="end"
         android:layout_marginEnd="10dp"
         android:layout_marginTop="28dp"
         android:alpha="0.0"
-        android:background="@drawable/btn_background"
+        android:background="@drawable/ic_action_rate"
         android:contentDescription="@null"
-        android:elevation="@dimen/button_elevation"/>
+        android:elevation="@dimen/button_elevation"/>-->
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/btnRateFloatingActionButton"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="end"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="28dp"
+        android:backgroundTint="@color/light_green"
+        android:src="@drawable/ic_action_rate" />
 
 </FrameLayout>
 
@@ -101,18 +111,13 @@ android:orientation="vertical">
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="@android:color/white" />
 
-<!--<ListView
-    android:id="@+id/hotelRoomListView"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:requiresFadingEdge="vertical" />-->
-
     <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/roomRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
         app:layoutManager="LinearLayoutManager"
         tools:context="com.gotravel.mobile.activities.HotelDetailActivity"
         tools:listitem="@layout/fragment_room" />
