@@ -1,4 +1,4 @@
-package model;
+package com.gotravel.mobile.models;
 
 /**
  * Created by RGodoy on 08/10/2016.

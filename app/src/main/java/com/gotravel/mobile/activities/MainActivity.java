@@ -24,21 +24,26 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.gotravel.mobile.R;
+import com.gotravel.mobile.adapters.FlightAdapter;
 import com.gotravel.mobile.adapters.HotelAdapter;
 import com.gotravel.mobile.adapters.TourPackageAdapter;
+
+
+import com.gotravel.mobile.fragment.FlightCatalogFragment;
 import com.gotravel.mobile.fragment.HotelCatalogFragment;
-<<<<<<< HEAD
+
 import com.gotravel.mobile.fragment.PlaceCatalogFragment;
-=======
+
 import com.gotravel.mobile.fragment.RestaurantCatalogFragment;
->>>>>>> aa5cf092b5d9d7346a05daacc769075f3a5a4e9c
+
+import com.gotravel.mobile.models.Flight;
 import com.gotravel.mobile.models.Hotel;
 import com.gotravel.mobile.models.TourPackage;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, HotelCatalogFragment.OnListFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener, HotelCatalogFragment.OnListFragmentInteractionListener, FlightCatalogFragment.OnListFlightFragmentInteractionListener {
 
     private Toolbar toolbar;
     private ArrayList<TourPackage> tourPackages;
@@ -210,7 +215,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_tour_package) {
             // Handle the camera action
         } else if (id == R.id.nav_flight) {
-
+            fragmentClass = FlightCatalogFragment.class;
         } else if (id == R.id.nav_hotel) {
             Log.d("Gotravel", "onNavigationItemSelected - nav_hotel");
             fragmentClass = HotelCatalogFragment.class;
@@ -286,6 +291,11 @@ public class MainActivity extends AppCompatActivity
         ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this, imagePair, holderPair, navPair, statusPair, toolbarPair);
 
         ActivityCompat.startActivity(MainActivity.this, transitionIntent, options.toBundle());
+
+    }
+
+    @Override
+    public void onListFragmentInteraction(Flight item, FlightAdapter.ViewHolder viewHolder) {
 
     }
 }
