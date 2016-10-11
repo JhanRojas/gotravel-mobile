@@ -27,6 +27,7 @@ import com.gotravel.mobile.R;
 import com.gotravel.mobile.adapters.HotelAdapter;
 import com.gotravel.mobile.adapters.TourPackageAdapter;
 import com.gotravel.mobile.fragment.HotelCatalogFragment;
+import com.gotravel.mobile.fragment.PlaceCatalogFragment;
 import com.gotravel.mobile.models.Hotel;
 import com.gotravel.mobile.models.TourPackage;
 
@@ -212,6 +213,8 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_restaurant) {
 
         } else if (id == R.id.nav_place) {
+            Log.d("Gotravel", "onNavigationItemSelected - nav_place");
+            fragmentClass = PlaceCatalogFragment.class;
 
         } else if (id == R.id.nav_share) {
 

@@ -2,10 +2,10 @@
 <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/hotelCatalogRecyclerView"
-    android:name="com.gotravel.mobile.fragment.HotelFragment"
+    android:id="@+id/placeCatalogRecyclerView"
+    android:name="com.gotravel.mobile.fragment.PlaceFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layoutManager="LinearLayoutManager"
-    tools:context="com.gotravel.mobile.fragment.HotelCatalogFragment"
-    tools:listitem="@layout/fragment_hotel" />
+    tools:context="com.gotravel.mobile.fragment.PlaceCatalogFragment"
+    tools:listitem="@layout/fragment_place" />

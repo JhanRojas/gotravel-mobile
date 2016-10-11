@@ -1,13 +1,142 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/activity_place_detail"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.gotravel.mobile.PlaceDetailActivity">
+    android:background="@color/primary"
+    android:orientation="vertical">
 
-</RelativeLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/placePictureImageView"
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:scaleType="centerCrop"
+            android:transitionName="tImage" />
+
+        <LinearLayout
+            android:id="@+id/llEditTextHolder"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#95000000">
+
+            <EditText
+                android:id="@+id/etTodo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:textColor="@android:color/white" />
+
+        </LinearLayout>
+
+    </FrameLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/primary_dark">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="20dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_place"
+                android:background="@android:color/transparent"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:height="50dp"
+                android:layout_marginLeft="140dp"
+                android:layout_marginTop="-75dp"
+                android:gravity="center_vertical"
+                android:text="Place"
+                android:textColor="@android:color/white"
+                android:textSize="18dp"/>
+            <TextView
+                android:id="@+id/placeNameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-20dp"
+                android:layout_marginLeft="140dp"
+                android:height="50dp"
+                android:gravity="center_vertical"
+                android:text="Doble"
+                android:textColor="@android:color/white"
+                android:textSize="22dp"
+                android:textStyle="bold"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:height="50dp"
+                android:gravity="center_vertical"
+                android:text="Type"
+                android:textColor="@android:color/white"
+                android:textSize="18dp"/>
+            <TextView
+                android:id="@+id/placeDescriptionTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mejor y más lujosa habitacion, cuentan con dos habitaciones dobles, 2 baños, salón y estancia.Mejor y más lujosa habitacion, cuentan con dos habitaciones dobles, 2 baños, salón y estancia."
+                android:textColor="@android:color/white"
+                android:textSize="18dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:height="50dp"
+                android:gravity="center_vertical"
+                android:text="Activity"
+                android:textColor="@android:color/white"
+                android:textSize="18dp"/>
+            <TextView
+                android:id="@+id/placeActivityTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-50dp"
+                android:layout_marginLeft="140dp"
+                android:height="50dp"
+                android:gravity="center_vertical"
+                android:text="2"
+                android:textColor="@android:color/white"
+                android:textSize="18dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:height="50dp"
+                android:gravity="center_vertical"
+                android:text="Price"
+                android:textColor="@android:color/white"
+                android:textSize="18dp"/>
+            <TextView
+                android:id="@+id/placePriceTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-50dp"
+                android:layout_marginLeft="140dp"
+                android:height="50dp"
+                android:gravity="center_vertical"
+                android:text="$ 50.0"
+                android:textColor="@android:color/white"
+                android:textSize="18dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:height="50dp"
+                android:gravity="center_vertical"
+                android:text="Descriptión"
+                android:textColor="@android:color/white"
+                android:textSize="18dp"/>
+
+        </LinearLayout>
+    </FrameLayout>
+</LinearLayout>

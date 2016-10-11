@@ -12,5 +12,9 @@ public class Constants {
     public static final String RESTFUL_HOTELS_GET_ROOMS_PATH_PREFIX = "/hotels/";
     public static final String RESTFUL_HOTELS_GET_ROOMS_PATH_SUFFIX = "/rooms.json";
 
+
+    public static final String RESTFUL_PLACES_LIST_PATH = "/Places.json";
+    public static final String RESTFUL_PLACES_GET_PATH = "/places/";
+
     public static int HOLDER_BACKGROUND_COLOR = 0;
 }

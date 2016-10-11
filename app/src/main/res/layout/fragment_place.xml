@@ -2,7 +2,7 @@
 <android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/hotelCard"
+    android:id="@+id/placeCard"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     card_view:cardCornerRadius="@dimen/card_corner_radius"
@@ -13,7 +13,7 @@
         android:layout_height="200dp">
 
         <ImageView
-            android:id="@+id/hotelPictureImageView"
+            android:id="@+id/placePictureImageView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
@@ -27,7 +27,7 @@
             android:orientation="horizontal" />
 
         <LinearLayout
-            android:id="@+id/hotelNameHolder"
+            android:id="@+id/placeNameHolder"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_gravity="bottom"
@@ -35,7 +35,7 @@
             android:transitionName="tNameHolder">
 
             <TextView
-                android:id="@+id/hotelNameTextView"
+                android:id="@+id/placeNameTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
