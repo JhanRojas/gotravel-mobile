@@ -13,7 +13,7 @@ public class Room {
     public final Double price;
     public final int hotelId;
 
-    public Room (int id, String name, String roomType, String description, int numberPeople, Double price, int hotelId) {
+    public Room (int id, String name, String roomType, int numberPeople, Double price, String description, int hotelId) {
         this.id = id;
         this.roomType = roomType;
         this.name = name;

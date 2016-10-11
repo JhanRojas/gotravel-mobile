@@ -261,6 +261,7 @@ public class MainActivity extends AppCompatActivity
 
         Intent transitionIntent = new Intent(MainActivity.this, HotelDetailActivity.class);
         transitionIntent.putExtra(HotelDetailActivity.EXTRA_PARAM_ID, item.id);
+        transitionIntent.putExtra(HotelDetailActivity.EXTRA_PARAM_NAME, item.name);
         ImageView placeImage = (ImageView) v.hotelPictureImageView;
         LinearLayout placeNameHolder = (LinearLayout) v.hotelNameHolder;
 

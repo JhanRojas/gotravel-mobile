@@ -34,7 +34,10 @@
             android:name=".activities.TourPackageDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <activity android:name=".activities.HotelDetailActivity"
+        <activity
+            android:name=".activities.HotelDetailActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity android:name=".activities.RoomDetailActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
     </application>
 

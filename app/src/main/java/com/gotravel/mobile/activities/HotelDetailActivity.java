@@ -63,6 +63,8 @@ public class HotelDetailActivity extends Activity implements View.OnClickListene
     ArrayList<Room> rooms = new ArrayList<>();
 
     public static final String EXTRA_PARAM_ID = "hotel_id";
+    public static final String EXTRA_PARAM_NAME = "hotel_name";
+    public static int PALETTE_COLOR = 0;
 
     public static final String NAV_BAR_VIEW_NAME = Window.NAVIGATION_BAR_BACKGROUND_TRANSITION_NAME;
     private ListView hotelRoomListView;
@@ -90,6 +92,7 @@ public class HotelDetailActivity extends Activity implements View.OnClickListene
         setContentView(R.layout.activity_hotel_detail);
 
         int hotelId = getIntent().getIntExtra(EXTRA_PARAM_ID,0);
+        String hotelName = getIntent().getStringExtra(EXTRA_PARAM_NAME);
 
         getHotel(hotelId);
 
@@ -113,7 +116,7 @@ public class HotelDetailActivity extends Activity implements View.OnClickListene
         mTodoList = new ArrayList<>();
         mToDoAdapter = new ArrayAdapter(this, R.layout.row_todo, mTodoList);
 
-        roomRecyclerView.setAdapter(new RoomAdapter(rooms));
+        roomRecyclerView.setAdapter(new RoomAdapter(rooms, hotelId,hotelName));
 
         windowTransition();
 
@@ -135,9 +138,9 @@ public class HotelDetailActivity extends Activity implements View.OnClickListene
                         Room roomTemp = new Room(roomJson.getInt("id"),
                                 roomJson.getString("name"),
                                 roomJson.getString("room_type"),
-                                roomJson.getString("description"),
                                 roomJson.getInt("number_people"),
                                 roomJson.getDouble("price"),
+                                roomJson.getString("description"),
                                 roomJson.getInt("hotel_id"));
                         mTodoList.add(roomTemp.name);
                         rooms.add(roomTemp);
@@ -231,7 +234,8 @@ public class HotelDetailActivity extends Activity implements View.OnClickListene
 
     private void applyPalette() {
         //getWindow().setBackgroundDrawable(new ColorDrawable(mPalette.getDarkMutedColor(defaultColorForRipple)));
-        hotelNameHolder.setBackgroundColor(mPalette.getMutedColor(defaultColorForRipple));
+        Constants.HOLDER_BACKGROUND_COLOR = mPalette.getMutedColor(defaultColorForRipple);
+        hotelNameHolder.setBackgroundColor(Constants.HOLDER_BACKGROUND_COLOR);
         mRevealView.setBackgroundColor(mPalette.getLightVibrantColor(defaultColorForRipple));
     }
 
