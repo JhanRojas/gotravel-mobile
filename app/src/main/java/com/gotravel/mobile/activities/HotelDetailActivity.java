@@ -65,9 +65,9 @@ public class HotelDetailActivity extends Activity implements View.OnClickListene
 
     public static final String NAV_BAR_VIEW_NAME = Window.NAVIGATION_BAR_BACKGROUND_TRANSITION_NAME;
     private ListView hotelRoomListView;
-    private ImageView mImageView;
-    private TextView mTitle;
-    private LinearLayout mTitleHolder;
+    private ImageView hotelPictureImageView;
+    private TextView hotelNameTextView;
+    private LinearLayout hotelNameHolder;
     private Palette mPalette;
     private ImageButton mAddButton;
     private Animatable mAnimatable;
@@ -80,7 +80,7 @@ public class HotelDetailActivity extends Activity implements View.OnClickListene
     private ArrayAdapter mToDoAdapter;
     int defaultColorForRipple;
     Hotel hotel = null;
-    RecyclerView recyclerView;
+    RecyclerView roomRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,13 +90,11 @@ public class HotelDetailActivity extends Activity implements View.OnClickListene
         int hotelId = getIntent().getIntExtra(EXTRA_PARAM_ID,0);
 
         getHotel(hotelId);
-        //hotel = HotelContent.ITEM_MAP.get(getIntent().getIntExtra(EXTRA_PARAM_ID,0));
 
-        //hotelRoomListView = (ListView) findViewById(R.id.hotelRoomListView);
-        recyclerView = (RecyclerView) findViewById(R.id.roomRecyclerView);
-        mImageView = (ImageView) findViewById(R.id.hotelPictureImageView);
-        mTitle = (TextView) findViewById(R.id.textView);
-        mTitleHolder = (LinearLayout) findViewById(R.id.hotelNameHolder);
+        roomRecyclerView = (RecyclerView) findViewById(R.id.roomRecyclerView);
+        hotelPictureImageView = (ImageView) findViewById(R.id.hotelPictureImageView);
+        hotelNameTextView = (TextView) findViewById(R.id.hotelNameTextView);
+        hotelNameHolder = (LinearLayout) findViewById(R.id.hotelNameHolder);
         mAddButton = (ImageButton) findViewById(R.id.btn_add);
         mRevealView = (LinearLayout) findViewById(R.id.llEditTextHolder);
         mEditTextTodo = (EditText) findViewById(R.id.etTodo);
@@ -112,7 +110,7 @@ public class HotelDetailActivity extends Activity implements View.OnClickListene
         mTodoList = new ArrayList<>();
         mToDoAdapter = new ArrayAdapter(this, R.layout.row_todo, mTodoList);
 
-        recyclerView.setAdapter(new RoomAdapter(rooms));
+        roomRecyclerView.setAdapter(new RoomAdapter(rooms));
 
         windowTransition();
 
@@ -146,7 +144,7 @@ public class HotelDetailActivity extends Activity implements View.OnClickListene
                     e.printStackTrace();
                 }
                 //Allow the adapter refresh their content
-                recyclerView.getAdapter().notifyDataSetChanged();
+                roomRecyclerView.getAdapter().notifyDataSetChanged();
             }
         }, new Response.ErrorListener() {
 
@@ -168,11 +166,11 @@ public class HotelDetailActivity extends Activity implements View.OnClickListene
 
                 try {
                     hotel = new Hotel(response.getInt("id"),response.getString("name"),response.getString("description"), response.getString("pictureUrl"));
-                    mTitle.setText(hotel.name);
+                    hotelNameTextView.setText(hotel.name);
                     Picasso.with(getApplicationContext()).load(hotel.pictureUrl).into(new Target() {
                         @Override
                         public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                            mImageView.setImageBitmap(bitmap);
+                            hotelPictureImageView.setImageBitmap(bitmap);
                             colorize(bitmap);
                         }
 
@@ -229,8 +227,8 @@ public class HotelDetailActivity extends Activity implements View.OnClickListene
     }
 
     private void applyPalette() {
-        getWindow().setBackgroundDrawable(new ColorDrawable(mPalette.getDarkMutedColor(defaultColorForRipple)));
-        mTitleHolder.setBackgroundColor(mPalette.getMutedColor(defaultColorForRipple));
+        //getWindow().setBackgroundDrawable(new ColorDrawable(mPalette.getDarkMutedColor(defaultColorForRipple)));
+        hotelNameHolder.setBackgroundColor(mPalette.getMutedColor(defaultColorForRipple));
         applyRippleColor(mPalette.getVibrantColor(defaultColorForRipple),
                 mPalette.getDarkVibrantColor(defaultColorForRipple));
         mRevealView.setBackgroundColor(mPalette.getLightVibrantColor(defaultColorForRipple));

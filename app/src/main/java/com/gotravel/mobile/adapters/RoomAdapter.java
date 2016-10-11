@@ -39,7 +39,8 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
         Log.d("GOTRAVEL","RoomViewHolder onBindViewHolder");
         holder.room = roomList.get(position);
         holder.roomNameTextView.setText(roomList.get(position).name);
-        holder.roomPriceTextView.setText("$ "+roomList.get(position).price.toString());
+        holder.roomPriceTextView.setText("$ " + roomList.get(position).price.toString());
+        holder.roomNumberPeopleTextView.setText(roomList.get(position).numberPeople + " people");
     }
 
     @Override
@@ -50,6 +51,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
     public class RoomViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView roomNameTextView;
+        public final TextView roomNumberPeopleTextView;
         public final TextView roomPriceTextView;
         public Room room;
 
@@ -57,6 +59,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
             super(view);
             mView = view;
             roomNameTextView = (TextView) view.findViewById(R.id.roomNameTextView);
+            roomNumberPeopleTextView = (TextView) view.findViewById(R.id.roomNumberPeopleTextView);
             roomPriceTextView = (TextView) view.findViewById(R.id.roomPriceTextView);
         }
     }
