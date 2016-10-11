@@ -42,6 +42,7 @@ import com.gotravel.mobile.R;
 import com.gotravel.mobile.adapters.TransitionAdapter;
 import com.gotravel.mobile.fragment.dummy.HotelContent;
 import com.gotravel.mobile.models.Hotel;
+import com.gotravel.mobile.models.Room;
 import com.gotravel.mobile.models.TourPackage;
 import com.gotravel.mobile.models.TourPackageData;
 import com.gotravel.mobile.util.Constants;
@@ -56,10 +57,12 @@ import java.util.ArrayList;
 
 public class HotelDetailActivity extends Activity implements View.OnClickListener{
 
+    ArrayList<Room> rooms = new ArrayList<>();
+
     public static final String EXTRA_PARAM_ID = "hotel_id";
 
     public static final String NAV_BAR_VIEW_NAME = Window.NAVIGATION_BAR_BACKGROUND_TRANSITION_NAME;
-    private ListView mList;
+    private ListView hotelRoomListView;
     private ImageView mImageView;
     private TextView mTitle;
     private LinearLayout mTitleHolder;
@@ -81,13 +84,15 @@ public class HotelDetailActivity extends Activity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hotel_detail);
 
-        getHotel(getIntent().getIntExtra(EXTRA_PARAM_ID,0));
+        int hotelId = getIntent().getIntExtra(EXTRA_PARAM_ID,0);
+
+        getHotel(hotelId);
         //hotel = HotelContent.ITEM_MAP.get(getIntent().getIntExtra(EXTRA_PARAM_ID,0));
 
-        mList = (ListView) findViewById(R.id.list);
-        mImageView = (ImageView) findViewById(R.id.placeImage);
+        hotelRoomListView = (ListView) findViewById(R.id.hotelRoomListView);
+        mImageView = (ImageView) findViewById(R.id.hotelPictureImageView);
         mTitle = (TextView) findViewById(R.id.textView);
-        mTitleHolder = (LinearLayout) findViewById(R.id.placeNameHolder);
+        mTitleHolder = (LinearLayout) findViewById(R.id.hotelNameHolder);
         mAddButton = (ImageButton) findViewById(R.id.btn_add);
         mRevealView = (LinearLayout) findViewById(R.id.llEditTextHolder);
         mEditTextTodo = (EditText) findViewById(R.id.etTodo);
@@ -99,12 +104,53 @@ public class HotelDetailActivity extends Activity implements View.OnClickListene
         mRevealView.setVisibility(View.INVISIBLE);
         isEditTextVisible = false;
 
+        getRooms(hotelId);
         mTodoList = new ArrayList<>();
         mToDoAdapter = new ArrayAdapter(this, R.layout.row_todo, mTodoList);
-        mList.setAdapter(mToDoAdapter);
+        hotelRoomListView.setAdapter(mToDoAdapter);
 
         windowTransition();
 
+    }
+
+    public void getRooms(int idHotel){
+        JsonArrayRequest jsonRequest = new JsonArrayRequest(
+                Request.Method.GET, Constants.RESTFUL_MAIN_URL+Constants.RESTFUL_HOTELS_GET_ROOMS_PATH_PREFIX+idHotel+Constants.RESTFUL_HOTELS_GET_ROOMS_PATH_SUFFIX, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                // the response is already constructed as a JSONObject!
+
+                rooms.clear();
+                try {
+
+                    for(int i=0;i<response.length();i++){
+                        JSONObject roomJson = response.getJSONObject(i);
+                        Room roomTemp = new Room(roomJson.getInt("id"),
+                                roomJson.getString("name"),
+                                roomJson.getString("room_type"),
+                                roomJson.getString("description"),
+                                roomJson.getInt("number_people"),
+                                roomJson.getDouble("price"),
+                                roomJson.getInt("hotel_id"));
+                        mTodoList.add(roomTemp.name);
+                        rooms.add(roomTemp);
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                //Allow the adapter refresh their content
+                mToDoAdapter.notifyDataSetChanged();
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        }
+        );
+        Volley.newRequestQueue(this.getApplicationContext()).add(jsonRequest);
     }
 
     public void getHotel(int idHotel){

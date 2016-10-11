@@ -6,6 +6,7 @@ import android.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,6 +43,7 @@ public class HotelCatalogFragment extends Fragment {
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
     RecyclerView recyclerView;
+    private StaggeredGridLayoutManager mStaggeredLayoutManager;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -83,13 +85,20 @@ public class HotelCatalogFragment extends Fragment {
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
             recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
+            /*(if (mColumnCount <= 1) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                Log.d("GOTRAVEL","LinearLayoutManager");
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
+                Log.d("GOTRAVEL","GridLayoutManager");
+            }*/
             //Load JSON
             getHotels();
+
+            mStaggeredLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
+            recyclerView = (RecyclerView) view.findViewById(R.id.hotelCatalogRecyclerView);
+            recyclerView.setLayoutManager(mStaggeredLayoutManager);
+            recyclerView.setHasFixedSize(true);
 
             recyclerView.setAdapter(new HotelAdapter(hotels, mListener, this.getContext()));
         }

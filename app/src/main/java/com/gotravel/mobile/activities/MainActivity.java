@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity
     private Toolbar toolbar;
     private ArrayList<TourPackage> tourPackages;
     private RecyclerView tourPackageRecyclerView;
+    private RecyclerView hotelCatalogRecyclerView;
     //private RecyclerView.Adapter tourPackageAdapter;
     //private RecyclerView.LayoutManager tourPackageLayoutManager;
     private StaggeredGridLayoutManager mStaggeredLayoutManager;
@@ -65,6 +66,8 @@ public class MainActivity extends AppCompatActivity
 
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();*/
+
+
 /*
         mStaggeredLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
 
@@ -256,9 +259,6 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onListFragmentInteraction(Hotel item, HotelAdapter.ViewHolder v) {
 
-        Log.d("Gotravel", "onListFragmentInteraction hotel.name="+item.id);
-        Log.d("Gotravel", "onListFragmentInteraction hotel.name="+item.name);
-
         Intent transitionIntent = new Intent(MainActivity.this, HotelDetailActivity.class);
         transitionIntent.putExtra(HotelDetailActivity.EXTRA_PARAM_ID, item.id);
         ImageView placeImage = (ImageView) v.hotelPictureImageView;
@@ -268,12 +268,12 @@ public class MainActivity extends AppCompatActivity
         View statusBar = findViewById(android.R.id.statusBarBackground);
 
         Pair<View, String> imagePair = Pair.create((View) placeImage, "tImage");
-        /*Pair<View, String> holderPair = Pair.create((View) placeNameHolder, "tNameHolder");
+        Pair<View, String> holderPair = Pair.create((View) placeNameHolder, "tNameHolder");
         Pair<View, String> navPair = Pair.create(navigationBar, Window.NAVIGATION_BAR_BACKGROUND_TRANSITION_NAME);
         Pair<View, String> statusPair = Pair.create(statusBar, Window.STATUS_BAR_BACKGROUND_TRANSITION_NAME);
-        Pair<View, String> toolbarPair = Pair.create((View)toolbar, "tActionBar");*/
+        Pair<View, String> toolbarPair = Pair.create((View)toolbar, "tActionBar");
 
-        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this, imagePair);
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this, imagePair, holderPair, navPair, statusPair, toolbarPair);
 
         ActivityCompat.startActivity(MainActivity.this, transitionIntent, options.toBundle());
 

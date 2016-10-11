@@ -10,7 +10,7 @@ android:orientation="vertical">
     android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/placeImage"
+        android:id="@+id/hotelPictureImageView"
         android:layout_width="match_parent"
         android:layout_height="220dp"
         android:scaleType="centerCrop"
@@ -44,7 +44,7 @@ android:orientation="vertical">
     android:layout_height="wrap_content">
 
     <LinearLayout
-        android:id="@+id/placeNameHolder"
+        android:id="@+id/hotelNameHolder"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="@color/primary_dark"
@@ -80,12 +80,12 @@ android:orientation="vertical">
     android:layout_height="wrap_content"
     android:layout_marginLeft="15dp"
     android:layout_marginTop="-10dp"
-    android:text="MY ACTIVITIES"
+    android:text="Rooms"
     android:textAppearance="?android:attr/textAppearanceSmall"
     android:textColor="@android:color/white" />
 
 <ListView
-    android:id="@+id/list"
+    android:id="@+id/hotelRoomListView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:requiresFadingEdge="vertical" />
