@@ -11,11 +11,12 @@ public class Restaurant {
     private Text logourl;
     private int status;
     private int service;
+    private  String pictureUrl;
 
     public Restaurant() {
     }
 
-    public Restaurant(int service, int status, Text logourl, Text websiteurl, Integer level, String description, String name) {
+    public Restaurant(int service, int status, Text logourl, Text websiteurl, Integer level, String description, String name, String pictureUrl) {
         this.service = service;
         this.status = status;
         this.logourl = logourl;
@@ -23,7 +24,10 @@ public class Restaurant {
         this.level = level;
         this.description = description;
         this.name = name;
+        this.pictureUrl = pictureUrl;
     }
+
+
 
     public String getDescription() {
         return description;
@@ -51,5 +55,9 @@ public class Restaurant {
 
     public String getName() {
         return name;
+    }
+
+    public String getPictureUrl() {
+        return pictureUrl;
     }
 }
